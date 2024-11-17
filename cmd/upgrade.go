@@ -143,13 +143,14 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 		return err
 	}
 
-	// fmt.Println(desiredRelease.Manifest)
 	fromFile, err := os.CreateTemp("", "helm-dyff-source-*")
 	if err != nil {
 		return err
 	}
 	defer os.Remove(fromFile.Name())
-	fromFile.Write([]byte(release.Manifest))
+	if _, err := fromFile.Write([]byte(release.Manifest)); err != nil {
+		return err
+	}
 	fromFile.Close()
 
 	toFile, err := os.CreateTemp("", "helm-dyff-target-*")
@@ -157,7 +158,9 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 		return err
 	}
 	defer os.Remove(toFile.Name())
-	toFile.Write([]byte(desiredRelease.Manifest))
+	if _, err := toFile.Write([]byte(desiredRelease.Manifest)); err != nil {
+		return err
+	}
 	toFile.Close()
 
 	from, to, err := ytbx.LoadFiles(fromFile.Name(), toFile.Name())
