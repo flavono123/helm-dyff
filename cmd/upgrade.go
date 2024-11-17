@@ -37,8 +37,6 @@ Show a dyff between the current release and the new chart.
 }
 
 func init() {
-	rootCmd.AddCommand(upgradeCmd) // TODO: dedup
-
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.namespace, "namespace", "n", "", "specify namespace where the release is installed, the currennt context's one would be used if not set")
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.version, "version", "v", "", "specify the target chart version, the current release chart's one would be used if not set")
 	// ref. https://github.dev/helm/helm/blob/ecc4adee692333629dbe6343fbcda58f8643b0ca/cmd/helm/flags.go#L45-L53
