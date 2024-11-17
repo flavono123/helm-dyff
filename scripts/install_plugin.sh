@@ -39,7 +39,7 @@ install_plugin() {
 
 # Main script
 name="dyff"
-repo="https://github.com/flavono123/${name}"
+repo="https://github.com/flavono123/helm-${name}"
 
 # Check if in development mode
 if [ -n "$HELM_PUSH_PLUGIN_NO_INSTALL_HOOK" ]; then
