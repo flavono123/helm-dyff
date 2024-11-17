@@ -34,7 +34,7 @@ install_plugin() {
 
     # Extract and install the plugin
     tar xzf "${plugin_filename}" -C "${plugin_directory}"
-    mv "${plugin_directory}/${name}" "bin/${bin}" || mv "${plugin_directory}/${bin}.exe" "bin/${bin}"
+    mv "${plugin_directory}/${bin}" "bin/${bin}" || mv "${plugin_directory}/${bin}.exe" "bin/${bin}"
 }
 
 # Main script
