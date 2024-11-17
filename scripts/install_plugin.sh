@@ -38,7 +38,7 @@ install_plugin() {
 }
 
 # Main script
-name="helm-dyff"
+name="dyff"
 repo="https://github.com/flavono123/${name}"
 
 # Check if in development mode
