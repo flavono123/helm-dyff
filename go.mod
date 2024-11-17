@@ -6,7 +6,9 @@ require (
 	github.com/gonvenience/ytbx v1.4.4
 	github.com/homeport/dyff v1.9.3
 	github.com/spf13/cobra v1.8.1
+	github.com/spf13/pflag v1.0.5
 	helm.sh/helm/v3 v3.16.3
+	k8s.io/client-go v0.31.1
 )
 
 require (
@@ -114,7 +116,6 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/cast v1.7.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
 	github.com/virtuald/go-ordered-json v0.0.0-20170621173500-b18e6e673d74 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
@@ -148,7 +149,6 @@ require (
 	k8s.io/apimachinery v0.31.1 // indirect
 	k8s.io/apiserver v0.31.1 // indirect
 	k8s.io/cli-runtime v0.31.1 // indirect
-	k8s.io/client-go v0.31.1 // indirect
 	k8s.io/component-base v0.31.1 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect

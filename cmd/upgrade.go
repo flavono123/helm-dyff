@@ -39,8 +39,7 @@ Show a dyff between the current release and the new chart.
 func init() {
 	rootCmd.AddCommand(upgradeCmd)
 
-	currentNamespace := getCurrentNamespace()
-	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.namespace, "namespace", "n", currentNamespace, "namespace where the release is installed")
+	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.namespace, "namespace", "n", "", "specify namespace where the release is installed, the currennt context's one would be used if not set")
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.version, "version", "v", "", "specify the target chart version, the current release chart's one would be used if not set")
 	// ref. https://github.dev/helm/helm/blob/ecc4adee692333629dbe6343fbcda58f8643b0ca/cmd/helm/flags.go#L45-L53
 	addValueOptionsFlags(upgradeCmd.Flags(), &valueOpts)
@@ -66,10 +65,18 @@ func addValueOptionsFlags(f *pflag.FlagSet, v *values.Options) {
 func runUpgrade(_ *cobra.Command, args []string) error {
 	releaseName, chartName := args[0], args[1]
 
+	var namespace string
+
+	if upgradeCmdSettings.namespace != "" {
+		namespace = upgradeCmdSettings.namespace
+	} else {
+		namespace = getCurrentNamespace()
+	}
+
 	// 0. helm config
 	envSettings := cli.New()
 	cfg := new(action.Configuration)
-	if err := cfg.Init(envSettings.RESTClientGetter(), upgradeCmdSettings.namespace, "secrets", nil); err != nil {
+	if err := cfg.Init(envSettings.RESTClientGetter(), namespace, "secrets", nil); err != nil {
 		return err
 	}
 
@@ -96,7 +103,7 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 	helmInstall := action.NewInstall(cfg)
 	helmInstall.DryRun = true
 	helmInstall.ReleaseName = releaseName
-	helmInstall.Namespace = upgradeCmdSettings.namespace
+	helmInstall.Namespace = namespace
 
 	// HACK: override with the current release's one (this) or use latest, which is better?
 	if upgradeCmdSettings.version != "" {
