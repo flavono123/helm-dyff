@@ -34,12 +34,13 @@ install_plugin() {
 
     # Extract and install the plugin
     tar xzf "${plugin_filename}" -C "${plugin_directory}"
-    mv "${plugin_directory}/${name}" "bin/${name}" || mv "${plugin_directory}/${name}.exe" "bin/${name}"
+    mv "${plugin_directory}/${name}" "bin/${bin}" || mv "${plugin_directory}/${bin}.exe" "bin/${bin}"
 }
 
 # Main script
-name="dyff"
-repo="https://github.com/flavono123/helm-${name}"
+bin="dyff"
+name="helm-dyff"
+repo="https://github.com/flavono123/${name}"
 
 # Check if in development mode
 if [ -n "$HELM_PUSH_PLUGIN_NO_INSTALL_HOOK" ]; then
