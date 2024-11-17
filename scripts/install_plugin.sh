@@ -71,11 +71,11 @@ esac
 
 # Construct the plugin download URL
 if [ "$(uname)" = "Darwin" ]; then
-    url="${repo}/releases/download/v${version}/${name}_${version}_darwin_${arch}.tar.gz"
+    url="${repo}/releases/download/v${version}/${name}-darwin-${arch}.tar.gz"
 elif [ "$(uname)" = "Linux" ] ; then
-    url="${repo}/releases/download/v${version}/${name}_${version}_linux_${arch}.tar.gz"
+    url="${repo}/releases/download/v${version}/${name}-linux-${arch}.tar.gz"
 else
-    url="${repo}/releases/download/v${version}/${name}_${version}_windows_${arch}.tar.gz"
+    url="${repo}/releases/download/v${version}/${name}-windows-.tar.gz"
 fi
 
 echo "$url"
