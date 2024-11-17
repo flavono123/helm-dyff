@@ -1,0 +1,31 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+builds:
+- env:
+  - CGO_ENABLED=0
+  # main: .
+  binary: bin/dyff
+  # ldflags: -s -w -X github.com/flavono123/helm-dyff/cmd.Version={{ .Version }}
+  goos:
+  - darwin
+  - linux
+  - windows
+  goarch:
+  - amd64
+  - arm64
+  mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+- format: tar.gz
+  name_template: '{{ .ProjectName }}-{{ if eq .Os "darwin" }}macos{{ else }}{{ .Os }}{{ end }}-{{ .Arch }}'
+
+changelog:
+  use: github-native
