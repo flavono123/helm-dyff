@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"k8s.io/client-go/tools/clientcmd"
 
 	"github.com/gonvenience/ytbx"
@@ -18,8 +19,7 @@ import (
 
 type upgradeCmdOptions struct {
 	namespace string
-	// values    []string
-	version string
+	version   string
 }
 
 var upgradeCmdSettings upgradeCmdOptions
@@ -43,8 +43,16 @@ func init() {
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.namespace, "namespace", "n", currentNamespace, "namespace where the release is installed")
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.version, "version", "v", "", "specify the target chart version, the current release chart's one would be used if not set")
 	// ref. https://github.dev/helm/helm/blob/ecc4adee692333629dbe6343fbcda58f8643b0ca/cmd/helm/flags.go#L45-L53
-	// only support -f for now
-	upgradeCmd.Flags().StringSliceVarP(&valueOpts.ValueFiles, "values", "f", []string{}, "specify values in a YAML file or a URL (can specify multiple)")
+	addValueOptionsFlags(upgradeCmd.Flags(), &valueOpts)
+}
+
+func addValueOptionsFlags(f *pflag.FlagSet, v *values.Options) {
+	f.StringSliceVarP(&v.ValueFiles, "values", "f", []string{}, "specify values in a YAML file or a URL (can specify multiple)")
+	f.StringArrayVar(&v.Values, "set", []string{}, "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")
+	f.StringArrayVar(&v.StringValues, "set-string", []string{}, "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")
+	f.StringArrayVar(&v.FileValues, "set-file", []string{}, "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)")
+	f.StringArrayVar(&v.JSONValues, "set-json", []string{}, "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)")
+	f.StringArrayVar(&v.LiteralValues, "set-literal", []string{}, "set a literal STRING value on the command line")
 }
 
 // runUpgrade do `dyff bw -b` with args as current release and desired to be installed,
