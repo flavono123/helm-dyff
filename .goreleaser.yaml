@@ -12,7 +12,7 @@ builds:
 - env:
   - CGO_ENABLED=0
   # main: .
-  binary: bin/dyff
+  binary: dyff
   # ldflags: -s -w -X github.com/flavono123/helm-dyff/cmd.Version={{ .Version }}
   goos:
   - darwin
