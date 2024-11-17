@@ -25,7 +25,7 @@ builds:
 
 archives:
 - format: tar.gz
-  name_template: '{{ .ProjectName }}-{{ if eq .Os "darwin" }}macos{{ else }}{{ .Os }}{{ end }}-{{ .Arch }}'
+  name_template: '{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}'
 
 changelog:
   use: github-native
