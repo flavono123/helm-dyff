@@ -23,6 +23,9 @@ builds:
   - arm64
   mod_timestamp: "{{ .CommitTimestamp }}"
 
+snapshot:
+  name_template: "{{ incpatch .Version }}-devel"
+
 archives:
 - format: tar.gz
   name_template: '{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}'
