@@ -24,7 +24,7 @@ builds:
   mod_timestamp: "{{ .CommitTimestamp }}"
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-devel"
+  version_template: "{{ incpatch .Version }}-devel"
 
 archives:
 - format: tar.gz

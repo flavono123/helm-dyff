@@ -54,11 +54,11 @@ func addValueOptionsFlags(f *pflag.FlagSet, v *values.Options) {
 // runUpgrade do `dyff bw -b` with args as current release and desired to be installed,
 // the concept of args have some scenarios:
 // 1. upgrade the chart version with the same values
-// dyff bw -b <(helm get manifest <name> -n <namespace>) <(helm template -f <(helm get values -n <namespace> <name>) -n <namespace> <name> <chart> --version <chart-version>)
+// dyff bw -ib <(helm get manifest <name> -n <namespace>) <(helm template -f <(helm get values -n <namespace> <name>) -n <namespace> <name> <chart> --version <chart-version>)
 // 2. upgrade values with the same chart version
-// dyff bw -b <(helm get manifest <name> -n <namespace>) <(helm template -f <values-file> -n <namespace> <name> <chart>)
+// dyff bw -ib <(helm get manifest <name> -n <namespace>) <(helm template -f <values-file> -n <namespace> <name> <chart>)
 // 3. upgrade both chart version and values
-// dyff bw -b <(helm get manifest <name> -n <namespace>) <(helm template -f <values-file> -n <namespace> <name> <chart> --version <chart-version>)
+// dyff bw -ib <(helm get manifest <name> -n <namespace>) <(helm template -f <values-file> -n <namespace> <name> <chart> --version <chart-version>)
 func runUpgrade(_ *cobra.Command, args []string) error {
 	releaseName, chartName := args[0], args[1]
 
@@ -164,7 +164,9 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	report, err := dyff.CompareInputFiles(from, to)
+	report, err := dyff.CompareInputFiles(from, to,
+		dyff.IgnoreOrderChanges(true), // -i
+	)
 	if err != nil {
 		return err
 	}
