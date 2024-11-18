@@ -61,7 +61,7 @@ or just with the new values, disabling the default option:
 ## Installation
 
 ```sh
-❯ helm plugin install https://github.com/flavono123/helm-dyff.git
+❯ helm plugin install https://github.com/flavono123/helm-dyff
 ```
 
 ## TODO
