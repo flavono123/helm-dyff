@@ -6,6 +6,8 @@
 
 A helm3 plugin, dyff between the current release and new one with a new chart version and values.
 
+![helm-dyff](./assets/helm-dyff.gif)
+
 ## Concept
 
 To dry-run the upgrade of a release with a new chart version, usually do this with [`dyff`](https://github.com/homeport/dyff), my favorite diff tool and too long and several times of `helm` calls:
