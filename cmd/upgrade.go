@@ -5,7 +5,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"k8s.io/client-go/tools/clientcmd"
 
 	"github.com/gonvenience/ytbx"
 	"github.com/homeport/dyff/pkg/dyff"
@@ -185,15 +184,5 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 }
 
 func getCurrentNamespace() string {
-	rules := clientcmd.NewDefaultClientConfigLoadingRules()
-	config := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		rules,
-		&clientcmd.ConfigOverrides{},
-	)
-
-	namespace, _, err := config.Namespace()
-	if err != nil {
-		return ""
-	}
-	return namespace
+	return os.Getenv("HELM_NAMESPACE")
 }
