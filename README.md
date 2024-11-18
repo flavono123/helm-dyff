@@ -66,5 +66,7 @@ or just with the new values, disabling the default option:
 
 ## TODO
 
-- [ ] support `helm plugin update`
-- [ ] unit tests
+- ci
+  - [ ] support `helm plugin update`
+  - [ ] unit tests
+  - [ ] bump a tag, release at once
