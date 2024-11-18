@@ -19,6 +19,7 @@ import (
 type upgradeCmdOptions struct {
 	namespace string
 	version   string
+	ammend    bool
 }
 
 var upgradeCmdSettings upgradeCmdOptions
@@ -38,6 +39,7 @@ Show a dyff between the current release and the new chart.
 func init() {
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.namespace, "namespace", "n", "", "specify namespace where the release is installed, the currennt context's one would be used if not set")
 	upgradeCmd.Flags().StringVarP(&upgradeCmdSettings.version, "version", "v", "", "specify the target chart version, the current release chart's one would be used if not set")
+	upgradeCmd.Flags().BoolVarP(&upgradeCmdSettings.ammend, "ammend", "a", true, "merge(not deep, just top level) the current release's values with given other values flags")
 	// ref. https://github.dev/helm/helm/blob/ecc4adee692333629dbe6343fbcda58f8643b0ca/cmd/helm/flags.go#L45-L53
 	addValueOptionsFlags(upgradeCmd.Flags(), &valueOpts)
 }
@@ -127,12 +129,21 @@ func runUpgrade(_ *cobra.Command, args []string) error {
 		return err
 	}
 
-	var values map[string]interface{}
+	values := make(map[string]interface{})
 
-	if len(vals) == 0 {
-		values = currentReleaseValues
+	if upgradeCmdSettings.ammend {
+		for k, v := range currentReleaseValues {
+			values[k] = v
+		}
+		for k, v := range vals {
+			values[k] = v // override
+		}
 	} else {
-		values = vals
+		if len(vals) == 0 {
+			values = currentReleaseValues
+		} else {
+			values = vals
+		}
 	}
 
 	desiredRelease, err := helmInstall.Run(chartRequested, values)
