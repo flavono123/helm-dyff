@@ -26,7 +26,7 @@ Sometimes, the new values are required:
   <(helm template myrelease myrepo/mychart --version x.y.z -f <(helm get values myrelease) -f new-values.yaml ...)
 ```
 
-What if the curreent context is not in the same namespace as the release:
+What if the current context is not in the same namespace as the release:
 
 ```sh
 ❯ dyff bw ib \
